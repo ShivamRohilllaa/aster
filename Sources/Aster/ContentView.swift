@@ -57,6 +57,7 @@ struct ContentView: View {
             Image(systemName: "chevron.right").font(.system(size: 9)).foregroundStyle(Theme.muted)
             Text(state.section.rawValue).font(.system(size: 12)).foregroundStyle(Theme.secondary)
             Spacer(minLength: 8)
+            SupportPizzaLink()
             ContactLink()
             if !state.cleanup.queue.isEmpty {
                 Button { state.section = .cleanup; state.category = nil } label: {
@@ -151,5 +152,28 @@ private struct ContactLink: View {
         .accessibilityLabel("Contact me")
         .accessibilityHint("Opens your email app to contact Aster support.")
         .accessibilityIdentifier("contact-email")
+    }
+}
+
+private struct SupportPizzaLink: View {
+    private let destination = URL(string: "https://buymeacoffee.com/shivamrohilla")!
+
+    var body: some View {
+        Link(destination: destination) {
+            HStack(spacing: 7) {
+                Text("🍕").font(.system(size: 14)).accessibilityHidden(true)
+                Text("Buy me a pizza").font(.system(size: 12, weight: .semibold))
+                Image(systemName: "arrow.up.right")
+                    .font(.system(size: 8, weight: .semibold))
+                    .accessibilityHidden(true)
+            }
+            .foregroundStyle(Theme.secondary)
+        }
+        .buttonStyle(QuietButtonStyle())
+        .fixedSize(horizontal: true, vertical: false)
+        .help("Optional support in your browser. All Aster features stay free.")
+        .accessibilityLabel("Buy me a pizza")
+        .accessibilityHint("Opens the developer's public support page in your browser. Contributions are optional.")
+        .accessibilityIdentifier("support-buy-pizza")
     }
 }

@@ -138,6 +138,10 @@ The test targets cover scanning, search, treemap geometry, cache/app discovery, 
 
 Before submitting changes, read [CONTRIBUTING.md](CONTRIBUTING.md). Keep generated builds, real-data screenshots and credentials out of Git. Security-sensitive reports should go to the contact email rather than a public issue containing private paths or credentials.
 
+## Support Aster
+
+If Aster helps you, you can [🍕 buy me a pizza](https://buymeacoffee.com/shivamrohilla). Contributions are entirely optional. All current features remain free; supporting the project does not unlock features or change your access. The app’s **Buy me a pizza** button opens this external page in your browser; Aster does not collect payment details.
+
 ## Contact and development
 
 Maintained by **Aster contributors**. For questions, feedback, development discussions or private security reports, contact **[shivamrohillaa@gmail.com](mailto:shivamrohillaa@gmail.com)**.

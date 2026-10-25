@@ -24,6 +24,8 @@ There is no checkout or activation step. The website can use **Download for Free
 
 The main top bar includes **Contact me**, which opens the user's email app addressed to [shivamrohillaa@gmail.com](mailto:shivamrohillaa@gmail.com). Contacting support is optional and does not affect feature access. Aster does not send email automatically.
 
+The top bar also offers **Buy me a pizza**, linking to [the public support page](https://buymeacoffee.com/shivamrohilla). This is entirely optional and opens in the browser. Aster does not process contributions or collect payment details; supporting the project does not change feature access.
+
 Do not advertise “free forever” or paid future upgrades unless that policy is explicitly decided. The current policy grants free access to the features in this release.
 
 ## Safety and privacy stay in place
