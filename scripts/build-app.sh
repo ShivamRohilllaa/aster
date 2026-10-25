@@ -109,6 +109,7 @@ mkdir -p "$ASTER_STAGED_APP/Contents/MacOS" "$ASTER_STAGED_APP/Contents/Resource
 cp "$ASTER_BIN_DIR/Aster" "$ASTER_STAGED_APP/Contents/MacOS/Aster"
 cp "$ASTER_ROOT/Resources/Info.plist" "$ASTER_STAGED_APP/Contents/Info.plist"
 cp "$ASTER_ROOT/Resources/AppIcon.icns" "$ASTER_STAGED_APP/Contents/Resources/AppIcon.icns"
+cp "$ASTER_ROOT/LICENSE" "$ASTER_STAGED_APP/Contents/Resources/LICENSE.txt"
 if [[ "$ASTER_ACCESS_MODE" == "paid" ]]; then
     cp "$ASTER_ROOT/Resources/DodoConfiguration.json" "$ASTER_STAGED_APP/Contents/Resources/DodoConfiguration.json"
 fi

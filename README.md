@@ -1,124 +1,147 @@
-# Aster
+<div align="center">
+  <img src="Resources/AppIcon.png" width="104" alt="Aster app icon">
+  <h1>Aster</h1>
+  <p><strong>A little clarity. A lot of space.</strong></p>
+  <p>A native macOS storage explorer with a visual disk map and cleanup you review.</p>
+  <p>macOS 14+ · Apple Silicon + Intel · Swift + SwiftUI · MIT licensed</p>
+  <p><a href="#build-and-run">Build & run</a> · <a href="docs/BUILD_AND_INSTALL.md">Packaging guide</a> · <a href="docs/ARCHITECTURE.md">Architecture</a> · <a href="docs/CLEANUP_RULES.md">Cleanup rules</a> · <a href="#contact-and-development">Contact</a></p>
+</div>
 
-A native macOS storage manager with an interactive storage map, large-file discovery, application inventory, and reviewed cleanup.
+![Aster in dark appearance, showing a storage map of documentation sample files](docs/images/overview-dark.png)
 
-**Current release: all implemented features are free for everyone.** No payment, activation key, account, trial expiry, or first-100-user limit is required.
+**All implemented features are currently free.** No account, payment, activation key, trial expiry, or first-100-user limit is required. This repository contains source code; it does not currently provide a GitHub release download.
 
-## Requirements
+## What Aster does
 
-- macOS 14 or later.
-- Xcode with its Command Line Tools selected, or a compatible Swift toolchain and macOS SDK.
-- No third-party package dependencies or account is required to build locally.
+| Feature | How it works |
+| --- | --- |
+| Disk and folder scans | Reads real filesystem metadata, with progress, cancellation and explicit partial-scan reporting. |
+| Storage map | A proportional, interactive squarified treemap with folders, categories and file inspection. |
+| Large-file search | Search paths, filter by category/minimum size, and sort by size, name or modification date. |
+| Caches and logs | Measures existing user cache/log folders and supported developer cache locations. |
+| Application inventory | Discovers third-party app bundles and matches supported associated data by exact bundle identifier. |
+| Possible leftovers | Flags supported bundle-ID data whose app was not found in a complete inventory. These are suggestions to review. |
+| Reviewed cleanup | Queue selected items, inspect paths and warnings, then confirm a move to macOS Trash. |
+| Native controls | Copy Path, Show in Finder, scan details, keyboard shortcuts, and saved light/dark appearance. |
+
+Aster does not decide that a file is unnecessary merely because it is large, old, or inside a cache. **You choose what can go.** It never automatically empties Trash or falls back to permanent deletion.
+
+## Screenshots
+
+These are captures of the app's actual SwiftUI/AppKit views. They use a real scan of deliberately created documentation sample files, not a user's personal disk. File sizes are logical sizes of sparse fixtures, not a claim about reclaimable space or performance. No sample data is loaded by the shipping app. [Capture notes](docs/SCREENSHOTS.md).
+
+### Light appearance
+
+![Aster storage overview in light appearance](docs/images/overview-light.png)
+
+### Large files
+
+![Aster large-file search and file inspector in dark appearance](docs/images/large-files-dark.png)
+
+### Cleanup queue
+
+![Aster cleanup queue before review and confirmation](docs/images/cleanup-dark.png)
+
+Dark is the default. Change it through **Appearance**, **Aster → Settings…** (`⌘,`), or **View → Appearance**.
 
 ## Build and run
 
-From this directory:
+Requirements: macOS 14 or later, Xcode/Command Line Tools with a Swift 6-capable toolchain, and Git. The package uses Swift 5 language mode. There are no third-party Swift package dependencies.
+
+Copy this repository’s HTTPS URL from GitHub’s **Code** button and replace `REPOSITORY_URL` below:
 
 ```sh
+git clone REPOSITORY_URL aster
+cd aster
 ./scripts/build-app.sh
 open dist/Aster.app
 ```
 
-Use `./scripts/build-app.sh --debug` for a debug bundle. The script builds for the current Mac's architecture, generates the original app icon, and verifies a local ad-hoc signature in a temporary staging directory. It produces `dist/Aster.app` and `dist/Aster-local.zip`. The ZIP excludes extended attributes, preserving a clean bundle when a synced workspace adds Finder metadata. Build products and compiler/module caches stay in `.build` inside this checkout.
+The app scans your home folder on launch. Use **Scan folder** to select another location. Names, sizes and results come from the filesystem; no invented storage totals are used.
 
-Use `./scripts/build-app.sh --universal` to build one app for Apple Silicon and Intel Macs running macOS 14 or later. It compiles both architectures and verifies the merged executable. The resulting `dist/Aster-universal-local.zip` is a local build; follow the [website release guide](docs/WEBSITE_RELEASE.md) to sign, notarize and verify a public download.
-
-You can also open `Package.swift` in Xcode, select the **Aster** executable scheme, and run it on **My Mac**. The packaged `.app` is recommended for checking the Dock icon and macOS folder permissions.
-
-## What is included
-
-- Native SwiftUI/AppKit application for macOS.
-- Read-only folder scanning with progress and cancellation.
-- A visual storage map and file/category summaries.
-- Large-file search and filters.
-- File names, full paths, sizes, Copy Path, Reveal in Finder, and storage analysis.
-- A cleanup queue with exact-path preview, individual selections, and a separate confirmation before moving anything to macOS Trash.
-- Application inventory, removal of complete third-party app bundles, and optional associated-data cleanup.
-- Conservative possible-leftover detection based on exact bundle identifiers.
-- Real cache and log discovery, with conditional developer-tool cache locations, sizes, file counts, and opt-in cleanup.
-- Per-item results, cancellation of remaining moves, and Reveal in Trash when macOS returns the destination.
-
-Aster starts by scanning your home folder and showing live progress. The map, file list, and totals appear when that scan completes. You can cancel the scan or use **Choose folder** to inspect a different folder or disk. Application and leftover results come from the app inventory on your Mac. No demonstration files or invented storage figures are loaded into the app.
-
-Dark appearance is the default. Open **Appearance** in the sidebar, **Aster → Settings…** (⌘,), or **View → Appearance** to switch to Light. The preference is saved on this Mac and applies to all views, the storage map, and review sheets.
-
-## Free access
-
-All implemented features are available without activation: real disk scans, storage maps, large-file search, full paths, Copy Path, Finder actions, cache/app/leftover inventory, reviewed cleanup, supported app removal, and both themes. There is no first-100-user cap, license distribution process, or timed trial.
-
-For questions or feedback, use **Contact me** in the main top bar or email [shivamrohillaa@gmail.com](mailto:shivamrohillaa@gmail.com). The link opens your email app; Aster does not send messages automatically.
-
-The release policy is `AsterAccessPolicy.requiresLicense = false`. Checkout and license activation are disabled, and this free mode does not perform Dodo license requests. Any existing paid-license implementation is retained as dormant source for a possible future release; it is not a requirement for using this build.
-
-See [Free release guide](docs/FREE_RELEASE.md) for the current download and release flow. [Dodo account and product setup](docs/DODO_SETUP.md) is retained only as a future paid-release reference. A paid release would need an explicit product-policy change, approved and configured Dodo integration, and end-to-end verification before being offered to users. No payment or license email has been tested.
-
-## Cleanup workflow
-
-1. Scan a folder. Select a file or folder on the map or in Large files, then choose **Add to cleanup**. The context menu in Large files offers the same action.
-2. For app removal, open **Applications** to load the installed app inventory. Select an app and choose which associated items to add to the queue. Associated data starts unchecked. You can also select data while leaving the app unchecked, for example to review its caches. Quit a running app before queuing its removal or data.
-3. **Leftovers** lists possible app data whose bundle identifier was not found in the scanned application folders. Nothing is selected automatically. Add any other app folders you use before deciding these files are unwanted.
-4. **Caches & logs** measures existing app caches, logs, and supported developer caches. Review the path and caution for each entry, select the ones you want, and add them to your queue. Entries are never preselected.
-5. Open **Cleanup → Review for Trash**. Inspect the exact paths, recursively measured logical sizes, warnings, and blocked entries. Deselect anything to keep.
-6. Choose **Move … to Trash…**, then confirm in the separate native dialog. Every item is checked again before execution. Changed, protected, inaccessible, or unconfirmed items stay in place. Review the outcome for each item.
-
-Cache discovery uses actual existing locations on each Mac, including the user's `Library/Caches` and `Library/Logs`. This covers many third-party tools without requiring an app-specific rule. Documented developer locations are checked only when present. Cache data can be rebuilt or downloaded again, but may still be needed for current work; size and age alone do not prove an item is unused. Docker-managed storage and credential/configuration files are not offered as disposable cache. Where a tool requires its own cleanup mechanism, its data is informational and cannot be added to the Trash queue.
-
-Additional defaults include npm package cache, Gradle caches, Cargo crate downloads, Xcode Derived Data, and Kubernetes discovery/HTTP caches. Docker Desktop logs, minikube cached resources, and uv cache are measured for visibility with links to their own management guidance. Docker disk images and volumes, `.kube/config`, Kubernetes login-token caches, minikube cluster profiles, and entire tool configuration directories are excluded. Custom tool cache locations are not guessed. Generic cache/log listings are capped at 2,000 direct entries each; individual trees are measured with a 100,000-entry cap. An incomplete entry is clearly marked and unavailable for cleanup, while readable neighbors remain usable.
-
-Aster uses `FileManager.trashItem`; it never falls back to permanent deletion and never empties Trash. Moving items to Trash does not immediately reclaim space. You can inspect moved files in Finder and restore them using Finder where supported. Logical size is not a promise of recovered space.
-
-The queue is held in memory for this session. Overlapping parent/child selections are combined in the preview so they are not moved twice. A preview expires after 15 minutes and cannot be reused. If a selected app cannot be moved, its dependent selected data stays in place. Canceling execution stops remaining work and reports moves that already completed. Storage results are refreshed after successful moves in the scanned folder.
-
-## Application and leftover matching
-
-The default inventory scans `/Applications` and `~/Applications`; additional app folders can be selected. It reads app `Info.plist` identities, skips symlinks, and does not descend into app bundles to treat helper apps as independent installations. Multiple copies of an app remain separate entries; associated data is held back while another detected copy shares the same identifier.
-
-Matches use the exact bundle ID in the current user's Library: `Caches`, `Preferences`, `Application Support`, `Containers`, `Logs`, `Saved Application State`, `WebKit`, and `HTTPStorages`. Group Containers, system extensions, launch agents, privileged helpers, and fuzzy name matches are not included. Possible leftovers are suggestions, not proof that the files are unnecessary. Helper identifiers beneath installed app identifiers are excluded, and incomplete inventories suppress leftover results. App data can include preferences, sessions, and documents; review it carefully. Apps with vendor uninstallers, drivers, or background services may need their own uninstaller.
-
-## Current limits
-
-This free release does not charge users or require a license. It does not empty Trash, perform automatic cleanup, or update itself. Files and scan results stay on the Mac, and the free access policy does not contact Dodo. There is no app account or file upload service.
-
-Cleanup protects system locations, essential Library roots, Apple app bundles, running app bundles, and Aster itself. Direct symlink selections and paths through symlink ancestors are blocked. Links nested inside a selected folder move with that folder without following their targets. A complete preview is required; unreadable folders or selections exceeding 100,000 entries are blocked. Metadata and recursive fingerprints are checked again before each move, but no filesystem lock spans the final macOS Trash call. Avoid editing selected items while cleanup is underway. The app does not request administrator privileges or override macOS permissions.
-
-macOS can restrict Desktop, Documents, Downloads, external volumes, and other folders. Grant the relevant permission when macOS requests it. If you need broader access, review **System Settings → Privacy & Security → Full Disk Access** and explicitly add the packaged Aster app. Aster does not change permissions for you. A scan may be incomplete when some folders cannot be read; permission/error counts should be reviewed before drawing conclusions.
-
-The scanner skips symbolic links to avoid following paths outside the chosen tree or creating cycles. Scanning a folder is not equivalent to measuring every byte used on a volume. APFS clones, shared blocks, snapshots, compression, sparse files, protected storage, and files changing during a scan can produce differences between logical file sizes, allocated-size estimates, Finder totals, and truly reclaimable space. Allocated storage is an estimate, not a promise of space that can be recovered.
-
-Storage scans are capped at 250,000 items and store up to 100 scan notes. Reaching the cap produces clearly marked partial results; choose a smaller folder to inspect the rest. A startup-disk scan excludes `/System/Volumes` and `/Volumes` to avoid duplicate or external-volume counting. Choose an external volume directly to scan it. Search reports the complete match count and displays the first 500 results. The map groups small items to keep rendering responsive; use search and **Show folder on map** to reach their parent folders.
-
-The default ad-hoc signature is for local development. It is not a Developer ID signature, and the build is not notarized. Complete release signing, notarization, and distribution checks before sharing it with customers.
-
-## Signing when preparing a release
-
-Once your Developer ID Application certificate is installed locally, you can choose it explicitly:
+Build one local ZIP for both CPU families:
 
 ```sh
-ASTER_SIGN_IDENTITY='Developer ID Application: Your Company (TEAMID)' ./scripts/build-app.sh
+./scripts/build-app.sh --universal
 ```
 
-This enables the hardened runtime and requests a signing timestamp. It uses the identity you provide without retrieving credentials. The bundle identifier is `com.aster.storage.dev`; keep it stable across updates. A public release still needs notarization, distribution testing, a release/update process, and support policies. Free access does not replace these release steps. The build script does not submit the app to Apple or publish anything.
+This creates `dist/Aster.app` and `dist/Aster-universal-local.zip`. A universal app contains both `arm64` and `x86_64` slices; separate Intel and Apple Silicon downloads are not required.
 
-This repository contains source code, not signed release binaries or personal signing material. Build and verify a new release from this source using the [website release guide](docs/WEBSITE_RELEASE.md) and your own Developer ID identity. Previous release archives do not contain the current contact-link change.
+**Local builds are ad-hoc signed, not notarized for public distribution.** For toolchain setup, Xcode editing, tests, ZIP packaging, optional DMG creation, and signed website releases, follow the [step-by-step build and installation guide](docs/BUILD_AND_INSTALL.md). The repository contains no personal signing identity, certificate, private key, or notarization credentials.
 
-## Source layout
+## Tech stack
 
-- `Sources/AsterCore`: filesystem scanning, storage models, app inventory, and the preview/revalidation/Trash service.
-- `Sources/Aster`: macOS application and interface.
-- `Tests`: automated checks and synthetic fixtures, excluded from the shipping app. Cleanup tests inject a mover that only touches isolated temporary fixtures; they do not use your personal Trash.
-- `Resources`: bundle metadata and original generated icon assets.
-- `scripts/generate-icon.swift`: vector drawing source for the icon.
-- `scripts/build-app.sh`: local application bundling and signing.
-- `scripts/notarize-release.sh`: staged Developer ID signing, notarization and verification for website releases.
-- `scripts/notarize-xcode-release.sh`: notarization using the Apple account already signed in to Xcode.
+| Layer | Technology | Purpose |
+| --- | --- | --- |
+| Language/build | Swift, Swift Package Manager | Two production modules and two test targets; native macOS executable. |
+| Interface | SwiftUI, AppKit, SF Symbols | Views, windows, native folder selection, Finder integration and confirmation UI. |
+| State | Observation (`@Observable`, `@Bindable`), `@MainActor` | Observable application and feature state, with UI updates on the main actor. |
+| Work scheduling | Swift concurrency, tasks, cancellation, actors | Background scans/searches and serialized cleanup-preview bookkeeping. |
+| Filesystem | Foundation `FileManager`, Darwin `lstat` | Enumeration, metadata, no-follow link handling and macOS Trash moves. |
+| Change detection | CryptoKit SHA-256 | Metadata fingerprints for revalidation before cleanup; not content deduplication. |
+| Map geometry | CoreGraphics, custom squarified treemap | Deterministic weighted rectangles, drawn by SwiftUI. |
+| Local preferences | `@AppStorage` / UserDefaults | Saved appearance preference. |
+| Optional paid code | URLSession, Codable, Security/Keychain | Dormant Dodo licensing implementation; disabled in the current free build. |
+| Tests/distribution | XCTest, Bash, Python 3, Apple command-line tools | Isolated filesystem tests, app bundling, signing and notarization scripts. |
 
-To run tests with caches inside the checkout:
+This is a native Mac app. It does not use Electron, a web frontend, a database server, or a required backend.
+
+## Architecture and design patterns
+
+The project uses an **MVVM-style separation of SwiftUI views, observable state and core services**. State types have descriptive names such as `AppState`, `CleanupState` and `InventoryState`; they are not all named `ViewModel`. It is not a strict implementation of Clean Architecture.
+
+```mermaid
+flowchart TD
+    UI[SwiftUI views] --> State[Main-actor observable state]
+    State --> Scan[DiskScanner / DiskSearch]
+    State --> Discover[AppInventory / CleanupDiscovery]
+    State --> Cleanup[CleanupState]
+    Cleanup --> Review[TrashService: prepare preview]
+    Review --> Confirm[User review and confirmation]
+    Confirm --> Recheck[Revalidate selection and metadata]
+    Recheck --> Trash[FileManager.trashItem]
+    Scan --> Model[DiskSnapshot / DiskNode]
+    Model --> Map[TreemapLayout]
+    Map --> UI
+```
+
+Patterns include service separation, dependency injection at system boundaries, value-based result models, deterministic layout/search functions, and a two-stage preview/execute cleanup workflow. [Architecture and code map →](docs/ARCHITECTURE.md)
+
+## How cleanup decisions are made
+
+1. **Discover candidates:** existing cache locations, exact app identifiers, or files explicitly selected by the user.
+2. **Explain the evidence:** show the actual path, measured size, matching reason and warnings. “Possible leftover” does not mean “safe to delete.”
+3. **Prepare a fresh preview:** collapse overlapping selections, validate paths, recursively measure entries and record a metadata fingerprint.
+4. **Ask for confirmation:** review the selected items, then confirm the separate destructive-action dialog.
+5. **Recheck and move:** reject stale/changed/blocked items, respect app-data dependencies, and call macOS Trash only for confirmed eligible items.
+6. **Report each outcome:** moved, skipped or failed. Canceling stops remaining work; it does not undo completed moves.
+
+See [cleanup rules, developer-cache policy, protections and limitations](docs/CLEANUP_RULES.md) for the exact scope, including Docker and Kubernetes.
+
+## Privacy and practical limits
+
+- Storage scanning reads file metadata. Application identification additionally reads bundle `Info.plist` files. Results stay on the Mac.
+- The current free policy makes no Dodo checkout/license requests. The **Contact me** link opens your email client; it does not send a message automatically.
+- macOS permission controls still apply. Review **System Settings → Privacy & Security → Full Disk Access** if you choose to grant broader access. Aster cannot override protected locations.
+- Scans cap at 250,000 entries and retain up to 100 scan issues. Search displays up to 500 matches while reporting the full match count within the scanned snapshot.
+- Symbolic links are not followed. A startup-disk scan excludes `/System/Volumes` and `/Volumes`; scan an external volume directly.
+- Logical size, allocated estimates and recoverable space differ because of APFS clones, snapshots, sparse files, compression and other filesystem behavior. Moving files to Trash does not immediately free that space.
+- No automatic cleaning, root helper, permanent-delete fallback, Trash emptying, self-updater, malware scanner or content-based duplicate finder is implemented.
+
+## Tests and contributions
 
 ```sh
-CLANG_MODULE_CACHE_PATH="$PWD/.build/module-cache" \
-SWIFTPM_MODULECACHE_OVERRIDE="$PWD/.build/module-cache" \
-swift test --scratch-path "$PWD/.build" \
-  --cache-path "$PWD/.build/cache" \
-  --config-path "$PWD/.build/configuration" \
-  --security-path "$PWD/.build/security" --disable-sandbox
+swift test
 ```
+
+The test targets cover scanning, search, treemap geometry, cache/app discovery, cleanup protections, free access and dormant licensing behavior. Cleanup tests use isolated fixtures and an injected mover; they do not clean the developer's personal files or Trash. For reproducible local cache paths, see the [testing guide](docs/BUILD_AND_INSTALL.md#run-tests).
+
+Before submitting changes, read [CONTRIBUTING.md](CONTRIBUTING.md). Keep generated builds, real-data screenshots and credentials out of Git. Security-sensitive reports should go to the contact email rather than a public issue containing private paths or credentials.
+
+## Contact and development
+
+Maintained by **Aster contributors**. For questions, feedback, development discussions or private security reports, contact **[shivamrohillaa@gmail.com](mailto:shivamrohillaa@gmail.com)**.
+
+## License
+
+Aster's source code and accompanying project documentation are available under the [MIT License](LICENSE). Preserve the copyright and permission notice in copies or substantial portions of the software. Apple SDKs, system symbols and external services remain subject to their own terms.
