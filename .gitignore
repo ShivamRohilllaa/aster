@@ -1,0 +1,37 @@
+.build/
+.swiftpm/
+.cache/
+dist/
+.DS_Store
+*.xcuserstate
+
+# Local screenshots may include real file names and account details.
+previews/
+
+# Credentials and signing material stay on the developer's Mac.
+.env
+.env.*
+!.env.example
+*.p12
+*.pfx
+*.p8
+*.pem
+*.key
+*.cer
+*.crt
+*.cert
+*.der
+*.keychain
+*.keychain-db
+*.mobileprovision
+*.provisionprofile
+
+# Generated distribution artifacts and machine-specific diagnostics.
+*.app/
+*.xcarchive/
+*.xcdistributionlogs/
+*.zip
+*.dmg
+*.pkg
+*.log
+xcuserdata/
